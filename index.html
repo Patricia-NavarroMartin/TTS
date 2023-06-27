@@ -20,20 +20,29 @@
 
     body {
       font-family: Arial, sans-serif;
-      margin: var(--padding-s);
       background-color: var(--bg-color);
+      margin: 0;
+    }
+
+    #preview-box-parent {
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-color);
+      padding: var(--padding-m);
     }
 
     #preview-box {
-      position: sticky;
-      top: var(--padding-s);
+      display: flex;
+      gap: var(--padding-s);
+      flex-direction: column; /* Stack items vertically */
+      align-content: space-between;
+      justify-content: center; /* Horizontally center items */
       min-height: 220px;
       background-color: var(--ui01);
       border-radius: var(--rounded);
       text-align: center;
       cursor: pointer;
       padding: var(--padding-m);
-      margin-bottom: var(--padding-m);
     }
 
     #preview-text {
@@ -43,7 +52,6 @@
 
     sub {
       opacity: 0.2;
-      left: 50%;
     }
 
     .flipped {
@@ -66,7 +74,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
-      gap: var(--padding-s)
+      gap: var(--padding-s);
     }
 
     .word-button {
@@ -80,6 +88,7 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-size: 16px;
     }
 
     .word-input {
@@ -89,6 +98,7 @@
       background-color: var(--bg-color);
       padding-top: var(--padding-s);
       padding-bottom: var(--padding-s);
+      font-size: 16px;
     }
 
     #custom-word-input {
@@ -101,19 +111,26 @@
       margin-left: var(--padding-m);
     }
 
+    .side-padding {
+      padding-left: var(--padding-m);
+      padding-right: var(--padding-m);
+    }
+
   </style>
 </head>
 
 <body>
-  <div id="preview-box">
-    <div id="preview-text">Select a word</div>
-    <sub>Tap the container to flip the text</sub>
+  <div id="preview-box-parent">
+    <div id="preview-box">
+      <div id="preview-text">Select a word</div>
+      <sub>Tap to flip</sub>
+    </div>
   </div>
 
-  <div class="categories">
+  <div class="categories side-padding">
   </div>
 
-  <div class="word-input">
+  <div class="word-input side-padding">
     <input type="text" id="custom-word-input" placeholder="Enter custom word or phrase">
     <button id="custom-word-button">Speak</button>
   </div>
