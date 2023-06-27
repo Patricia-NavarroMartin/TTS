@@ -24,21 +24,56 @@
       background-color: var(--bg-color);
     }
 
+    #preview-box {
+      position: relative;
+      min-height: 220px;
+      padding: var(--padding-s);
+      background-color: var(--ui01);
+      border-radius: var(--rounded);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #preview-text {
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    .flipped {
+      transform: rotate(180deg);
+    }
+
+    sub {
+      opacity: 0.2;
+      left: 50%;
+    }
     .category {
       margin-bottom: var(--padding-m);
     }
 
     .category-title {
       font-weight: bold;
+      margin-bottom: var(--padding-s);
+    }
+
+    .word-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: var(--padding-s)
     }
 
     .word-button {
-      margin-right: var(--padding-s);
       padding: var(--padding-s) var(--padding-m);
+      width: calc(33% - var(--padding-s));
       background-color: var(--primary);
       border: none;
       border-radius: var(--rounded);
       cursor: pointer;
+      height: 40px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .word-input {
@@ -59,28 +94,6 @@
       margin-left: var(--padding-m);
     }
 
-    #preview-box {
-      position: relative;
-      min-height: 100px;
-      padding: var(--padding-s);
-      background-color: var(--ui01);
-      border-radius: var(--rounded);
-      text-align: center;
-      cursor: pointer;
-    }
-
-    #preview-text {
-      font-weight: bold;
-      font-size: 2rem;
-    }
-
-    .flipped {
-      transform: rotate(180deg);
-    }
-
-    sub {
-      opacity: 0.2;
-    }
   </style>
 </head>
 
