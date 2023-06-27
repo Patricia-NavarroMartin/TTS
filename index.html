@@ -6,12 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AAC TTS App</title>
   <style>
+
+  :root {
+    --padding-s: 8px;
+    --padding-m: 16px;
+    --primary: #E0E4CD;
+    --ui01: #F3F5EB;
+    --rounded: 16px;
+  }
+
     body {
       font-family: Arial, sans-serif;
     }
 
     .category {
-      margin-bottom: 10px;
+      margin-bottom: var(--padding-m);
     }
 
     .category-title {
@@ -19,22 +28,33 @@
     }
 
     .word-button {
-      margin-right: 5px;
-      margin-bottom: 5px;
-      padding: 5px 10px;
-      background-color: #e0e0e0;
+      margin-right: var(--padding-s);
+      padding: var(--padding-s) var(--padding-m);
+      background-color: var(--primary);
       border: none;
-      border-radius: 4px;
+      border-radius: var(--rounded);
       cursor: pointer;
     }
 
     .word-input {
       margin-top: 20px;
     }
+
+    #spoken-text {
+      width: 100%;
+      min-height: 70px;
+      padding: var(--padding-s);
+      background-color: var(--ui01);
+      border-radius: var(--rounded);
+      font-weight: bold;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
+  <div id="spoken-text"></div>
+
   <div class="categories">
     <div class="category">
       <div class="category-title"></div>
@@ -93,7 +113,10 @@
         const wordButton = document.createElement('button');
         wordButton.classList.add('word-button');
         wordButton.textContent = word;
-        wordButton.addEventListener('click', () => speakText(word));
+        wordButton.addEventListener('click', () => {
+          speakText(word);
+          displaySpokenText(word);
+        });
         wordButtonsDiv.appendChild(wordButton);
       });
 
@@ -109,6 +132,7 @@
       const customWord = customWordInput.value.trim();
       if (customWord !== '') {
         speakText(customWord);
+        displaySpokenText(customWord);
       }
     });
 
@@ -118,6 +142,12 @@
       // For example, you can use the SpeechSynthesis API:
       const utterance = new SpeechSynthesisUtterance(text);
       speechSynthesis.speak(utterance);
+    }
+
+    // Function to display the spoken text
+    function displaySpokenText(text) {
+      const spokenTextDiv = document.getElementById('spoken-text');
+      spokenTextDiv.textContent = text;
     }
   </script>
 </body>
