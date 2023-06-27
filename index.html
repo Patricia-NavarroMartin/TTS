@@ -3,17 +3,19 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Text-To-Speech">
+  <meta name="keywords" content="AAC, text to speech, tts">
+  <meta name="author" content="Shannon Donker">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AAC TTS App</title>
   <style>
-
-  :root {
-    --padding-s: 8px;
-    --padding-m: 16px;
-    --primary: #E0E4CD;
-    --ui01: #F3F5EB;
-    --rounded: 16px;
-  }
+    :root {
+      --padding-s: 8px;
+      --padding-m: 16px;
+      --primary: #E0E4CD;
+      --ui01: #F3F5EB;
+      --rounded: 16px;
+    }
 
     body {
       font-family: Arial, sans-serif;
@@ -38,22 +40,39 @@
 
     .word-input {
       margin-top: 20px;
+      width: 100%;
     }
 
-    #spoken-text {
-      width: 100%;
-      min-height: 70px;
+    #preview-box {
+      position: relative;
+      min-height: 100px;
       padding: var(--padding-s);
       background-color: var(--ui01);
       border-radius: var(--rounded);
-      font-weight: bold;
       text-align: center;
+      cursor: pointer;
+    }
+
+    #preview-text {
+      font-weight: bold;
+      font-size: 2rem;
+    }
+
+    .flipped {
+      transform: rotate(180deg);
+    }
+
+    sub {
+      opacity: 0.2;
     }
   </style>
 </head>
 
 <body>
-  <div id="spoken-text"></div>
+  <div id="preview-box">
+    <p id="preview-text">Select a word</p>
+    <sub>Tap the container to flip the text</sub>
+  </div>
 
   <div class="categories">
     <div class="category">
@@ -146,9 +165,19 @@
 
     // Function to display the spoken text
     function displaySpokenText(text) {
-      const spokenTextDiv = document.getElementById('spoken-text');
+      const spokenTextDiv = document.getElementById('preview-text');
       spokenTextDiv.textContent = text;
     }
+
+    // Function to flip the text upside down
+    function flipText() {
+      const spokenTextDiv = document.getElementById('preview-text');
+      spokenTextDiv.classList.toggle('flipped');
+    }
+
+    // Add event listener to the flip button
+    const flipButton = document.getElementById('preview-box');
+    flipButton.addEventListener('click', flipText);
   </script>
 </body>
 
