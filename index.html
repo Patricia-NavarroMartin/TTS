@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AAC TTS App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .category {
+      margin-bottom: 10px;
+    }
+
+    .category-title {
+      font-weight: bold;
+    }
+
+    .word-button {
+      margin-right: 5px;
+      margin-bottom: 5px;
+      padding: 5px 10px;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .word-input {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="categories">
+    <div class="category">
+      <div class="category-title"></div>
+      <div class="word-buttons">
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-title"></div>
+      <div class="word-buttons">
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-title"></div>
+      <div class="word-buttons">
+      </div>
+    </div>
+  </div>
+
+  <div class="word-input">
+    <input type="text" id="custom-word-input" placeholder="Enter custom word or phrase">
+    <button id="custom-word-button">Speak</button>
+  </div>
+
+  <script>
+    // Array of category names and their corresponding words
+    const categories = [
+      {
+        name: 'Greetings',
+        words: ['Hello', 'How are you?', 'My name is Shannon']
+      },
+      {
+        name: 'Common',
+        words: ['Yes', 'No', 'Thank you', 'Please']
+      },
+      {
+        name: 'Feelings',
+        words: ['I am hungry']
+      }
+    ];
+
+    // Create word buttons for each category
+    const categoriesContainer = document.querySelector('.categories');
+    categories.forEach(category => {
+      const categoryDiv = document.createElement('div');
+      categoryDiv.classList.add('category');
+
+      const categoryTitle = document.createElement('div');
+      categoryTitle.classList.add('category-title');
+      categoryTitle.textContent = category.name;
+      categoryDiv.appendChild(categoryTitle);
+
+      const wordButtonsDiv = document.createElement('div');
+      wordButtonsDiv.classList.add('word-buttons');
+
+      category.words.forEach(word => {
+        const wordButton = document.createElement('button');
+        wordButton.classList.add('word-button');
+        wordButton.textContent = word;
+        wordButton.addEventListener('click', () => speakText(word));
+        wordButtonsDiv.appendChild(wordButton);
+      });
+
+      categoryDiv.appendChild(wordButtonsDiv);
+      categoriesContainer.appendChild(categoryDiv);
+    });
+
+    // Handle custom word input and button
+    const customWordButton = document.getElementById('custom-word-button');
+    const customWordInput = document.getElementById('custom-word-input');
+
+    customWordButton.addEventListener('click', () => {
+      const customWord = customWordInput.value.trim();
+      if (customWord !== '') {
+        speakText(customWord);
+      }
+    });
+
+    // Function to speak the provided text
+    function speakText(text) {
+      // Use a text-to-speech library or API of your choice to speak the text
+      // For example, you can use the SpeechSynthesis API:
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+
+</html>
