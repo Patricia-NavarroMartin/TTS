@@ -15,10 +15,17 @@
       --primary: #E0E4CD;
       --ui01: #F3F5EB;
       --rounded: 16px;
+      --bg-color: white;
     }
 
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: var(--bg-color);
+    }
+
+    #container {
+      padding: var(--padding-s)
     }
 
     .category {
@@ -29,23 +36,48 @@
       font-weight: bold;
     }
 
+    .word-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: var(--padding-s);
+    }
+
     .word-button {
-      margin-right: var(--padding-s);
+      margin-bottom: var(--padding-s);
       padding: var(--padding-s) var(--padding-m);
       background-color: var(--primary);
       border: none;
       border-radius: var(--rounded);
       cursor: pointer;
+      white-space: normal;
+      width: calc(33% - var(--padding-s));
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .word-input {
-      margin-top: 20px;
+      position: sticky;
+      bottom: 0;
+      background-color: var(--ui01);
+      padding: var(--padding-s);
+      display: flex;
+      background-color: var(--bg-color);
+    }
+
+    #custom-word-input {
       width: 100%;
+      border-radius: var(--rounded);
+      padding: var(--padding-s);
+    }
+
+    #custom-word-button {
+      margin-left: var(--padding-m);
     }
 
     #preview-box {
       position: relative;
-      min-height: 100px;
+      height: 220px;
       padding: var(--padding-s);
       background-color: var(--ui01);
       border-radius: var(--rounded);
@@ -69,29 +101,30 @@
 </head>
 
 <body>
-  <div id="preview-box">
+  <div id="container">
+    <div id="preview-box">
     <p id="preview-text">Select a word</p>
     <sub>Tap the container to flip the text</sub>
-  </div>
+    </div>
 
-  <div class="categories">
-    <div class="category">
-      <div class="category-title"></div>
-      <div class="word-buttons">
+    <div class="categories">
+      <div class="category">
+        <div class="category-title"></div>
+        <div class="word-buttons">
+        </div>
       </div>
-    </div>
-    <div class="category">
-      <div class="category-title"></div>
-      <div class="word-buttons">
+      <div class="category">
+        <div class="category-title"></div>
+        <div class="word-buttons">
+        </div>
       </div>
-    </div>
-    <div class="category">
-      <div class="category-title"></div>
-      <div class="word-buttons">
+      <div class="category">
+        <div class="category-title"></div>
+        <div class="word-buttons">
+        </div>
       </div>
     </div>
   </div>
-
   <div class="word-input">
     <input type="text" id="custom-word-input" placeholder="Enter custom word or phrase">
     <button id="custom-word-button">Speak</button>
@@ -101,16 +134,24 @@
     // Array of category names and their corresponding words
     const categories = [
       {
-        name: 'Greetings',
-        words: ['Hello', 'How are you?', 'My name is Shannon']
+        name: 'Introductional',
+        words: ['Hello', 'How are you?', 'My name is Shannon', 'I can not speak, therefore I speak through this app', 'Bye']
       },
       {
         name: 'Common',
-        words: ['Yes', 'No', 'Thank you', 'Please']
+        words: ['Yes', 'No', 'Thank you', 'Please', 'Maybe', 'Why?', 'I do not know', 'Hahahaha']
       },
       {
         name: 'Feelings',
-        words: ['I am hungry']
+        words: ['I like it', 'I do not like it', 'I love you']
+      },
+      {
+        name: 'Needs',
+        words: ['I am hungry', 'I am thirsty', 'I have to pee']
+      },
+      {
+        name: 'Directional',
+        words: ['Come', 'I am coming', 'I am leaving']
       }
     ];
 
