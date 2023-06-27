@@ -25,13 +25,15 @@
     }
 
     #preview-box {
-      position: relative;
+      position: sticky;
+      top: var(--padding-s);
       min-height: 220px;
-      padding: var(--padding-s);
       background-color: var(--ui01);
       border-radius: var(--rounded);
       text-align: center;
       cursor: pointer;
+      padding: var(--padding-m);
+      margin-bottom: var(--padding-m);
     }
 
     #preview-text {
@@ -39,13 +41,17 @@
       font-size: 2rem;
     }
 
+    sub {
+      opacity: 0.2;
+      left: 50%;
+    }
+
     .flipped {
       transform: rotate(180deg);
     }
 
-    sub {
-      opacity: 0.2;
-      left: 50%;
+    .categories {
+      overflow: scroll;
     }
     .category {
       margin-bottom: var(--padding-m);
@@ -70,7 +76,7 @@
       border: none;
       border-radius: var(--rounded);
       cursor: pointer;
-      height: 40px;
+      height: 52px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -79,9 +85,10 @@
     .word-input {
       position: sticky;
       bottom: 0;
-      background-color: var(--ui01);
       display: flex;
       background-color: var(--bg-color);
+      padding-top: var(--padding-s);
+      padding-bottom: var(--padding-s);
     }
 
     #custom-word-input {
@@ -99,26 +106,11 @@
 
 <body>
   <div id="preview-box">
-    <p id="preview-text">Select a word</p>
+    <div id="preview-text">Select a word</div>
     <sub>Tap the container to flip the text</sub>
   </div>
 
   <div class="categories">
-    <div class="category">
-      <div class="category-title"></div>
-      <div class="word-buttons">
-      </div>
-    </div>
-    <div class="category">
-      <div class="category-title"></div>
-      <div class="word-buttons">
-      </div>
-    </div>
-    <div class="category">
-      <div class="category-title"></div>
-      <div class="word-buttons">
-      </div>
-    </div>
   </div>
 
   <div class="word-input">
