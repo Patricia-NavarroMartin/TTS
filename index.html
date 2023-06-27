@@ -15,10 +15,13 @@
       --primary: #E0E4CD;
       --ui01: #F3F5EB;
       --rounded: 16px;
+      --bg-color: white;
     }
 
     body {
       font-family: Arial, sans-serif;
+      margin: var(--padding-s);
+      background-color: var(--bg-color);
     }
 
     .category {
@@ -39,8 +42,21 @@
     }
 
     .word-input {
-      margin-top: 20px;
+      position: sticky;
+      bottom: 0;
+      background-color: var(--ui01);
+      display: flex;
+      background-color: var(--bg-color);
+    }
+
+    #custom-word-input {
       width: 100%;
+      border-radius: var(--rounded);
+      padding: var(--padding-s);
+    }
+
+    #custom-word-button {
+      margin-left: var(--padding-m);
     }
 
     #preview-box {
@@ -100,17 +116,25 @@
   <script>
     // Array of category names and their corresponding words
     const categories = [
-      {
-        name: 'Greetings',
-        words: ['Hello', 'How are you?', 'My name is Shannon']
+    {
+        name: 'Introductional',
+        words: ['Hello', 'How are you?', 'My name is Shannon', 'I can not speak, therefore I speak through this app', 'Bye']
       },
       {
         name: 'Common',
-        words: ['Yes', 'No', 'Thank you', 'Please']
+        words: ['Yes', 'No', 'Thank you', 'Please', 'Maybe', 'Why?', 'I do not know', 'Hahahaha']
       },
       {
         name: 'Feelings',
-        words: ['I am hungry']
+        words: ['I like it', 'I do not like it', 'I love you']
+      },
+      {
+        name: 'Needs',
+        words: ['I am hungry', 'I am thirsty', 'I have to pee']
+      },
+      {
+        name: 'Directional',
+        words: ['Come', 'I am coming', 'I am leaving']
       }
     ];
 
