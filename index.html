@@ -18,6 +18,7 @@
       --rounded: 8px;
       --round: 999px;
       --bg-color: white;
+      --disabled: #D9DCD1 ;
     }
 
     body {
@@ -75,7 +76,14 @@
 
     button {
       font-size: inherit;
+      cursor: pointer;
     }
+
+    button:disabled,
+    button[disabled]{
+    background-color: var(--disabled) !important;
+    cursor: not-allowed;
+}
 
     .word-buttons {
       display: flex;
@@ -90,7 +98,6 @@
       background-color: var(--primary);
       border: none;
       border-radius: var(--rounded);
-      cursor: pointer;
       height: 52px;
       overflow: hidden;
       white-space: nowrap;
@@ -100,7 +107,6 @@
     .word-button:focus {
       transform: scale(1);
 	    animation: pulse-green 2s infinite;
-
     }
 
     .word-input {
