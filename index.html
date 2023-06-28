@@ -10,11 +10,11 @@
   <title>AAC TTS App</title>
   <style>
     :root {
-      --padding-s: 8px;
-      --padding-m: 16px;
+      --spacing-s: 8px;
+      --spacing-m: 16px;
       --primary: #E0E4CD;
       --ui01: #F3F5EB;
-      --rounded: 16px;
+      --rounded: 8px;
       --bg-color: white;
     }
 
@@ -22,18 +22,19 @@
       font-family: Arial, sans-serif;
       background-color: var(--bg-color);
       margin: 0;
+      font-size: 1rem;
     }
 
     #preview-box-container {
       position: sticky;
       top: 0;
       background-color: var(--bg-color);
-      padding: var(--padding-m);
+      padding: var(--spacing-s) var(--spacing-m); var(--spacing-s); var(--spacing-m);;
     }
 
     #preview-box {
       display: flex;
-      gap: var(--padding-s);
+      gap: var(--spacing-s);
       flex-direction: column; /* Stack items vertically */
       align-content: space-between;
       justify-content: center; /* Horizontally center items */
@@ -41,7 +42,7 @@
       border-radius: var(--rounded);
       text-align: center;
       cursor: pointer;
-      padding: var(--padding-m);
+      padding: var(--spacing-m);
       height: 25vh;
     }
 
@@ -62,24 +63,24 @@
       overflow: scroll;
     }
     .category {
-      margin-bottom: var(--padding-m);
+      margin-bottom: var(--spacing-m);
     }
 
     .category-title {
       font-weight: bold;
-      margin-bottom: var(--padding-s);
+      margin-bottom: var(--spacing-s);
     }
 
     .word-buttons {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
-      gap: var(--padding-s);
+      gap: var(--spacing-s);
     }
 
     .word-button {
-      padding: var(--padding-s) var(--padding-m);
-      width: calc(33% - var(--padding-s));
+      padding: var(--spacing-s) var(--spacing-m);
+      width: calc(33% - var(--spacing-s));
       background-color: var(--primary);
       border: none;
       border-radius: var(--rounded);
@@ -88,32 +89,34 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      font-size: 16px;
     }
 
     .word-input {
       position: sticky;
       bottom: 0;
       display: flex;
-      background-color: var(--bg-color);
-      padding-top: var(--padding-s);
-      padding-bottom: var(--padding-s);
+      background-color: var(--ui01);
+      padding-top: var(--spacing-s);
+      padding-bottom: var(--spacing-s);
       font-size: 16px;
     }
 
     #custom-word-input {
       width: 100%;
+      height: 36px;
       border-radius: var(--rounded);
-      padding: var(--padding-s);
+      padding: var(--spacing-s);
+      background-color: var(--bg-color);
+      border-style: none;
     }
 
     #custom-word-button {
-      margin-left: var(--padding-m);
+      margin-left: var(--spacing-m);
     }
 
     .side-padding {
-      padding-left: var(--padding-m);
-      padding-right: var(--padding-m);
+      padding-left: var(--spacing-m);
+      padding-right: var(--spacing-m);
     }
 
   </style>
