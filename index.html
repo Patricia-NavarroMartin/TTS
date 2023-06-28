@@ -24,7 +24,7 @@
       margin: 0;
     }
 
-    #preview-box-parent {
+    #preview-box-container {
       position: sticky;
       top: 0;
       background-color: var(--bg-color);
@@ -37,12 +37,12 @@
       flex-direction: column; /* Stack items vertically */
       align-content: space-between;
       justify-content: center; /* Horizontally center items */
-      min-height: 220px;
       background-color: var(--ui01);
       border-radius: var(--rounded);
       text-align: center;
       cursor: pointer;
       padding: var(--padding-m);
+      height: 25vh;
     }
 
     #preview-text {
@@ -120,7 +120,7 @@
 </head>
 
 <body>
-  <div id="preview-box-parent">
+  <div id="preview-box-container">
     <div id="preview-box">
       <div id="preview-text">Select a word</div>
       <sub>Tap to flip</sub>
