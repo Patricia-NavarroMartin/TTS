@@ -73,6 +73,10 @@
       margin-bottom: var(--spacing-s);
     }
 
+    button {
+      font-size: inherit;
+    }
+
     .word-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -123,10 +127,21 @@
       background-color: var(--secondary);
     }
 
+    #custom-word-button:focus {
+      transform: scale(1);
+	    animation: pulse 2s infinite;
+    }
+
     .side-padding {
       padding-left: var(--spacing-m);
       padding-right: var(--spacing-m);
     }
+
+    input[type="text"]
+    {
+    font-size: inherit;
+    }
+
 
     .icon {
       padding: var(--spacing-s);
@@ -135,6 +150,23 @@
     .filter-white {
       filter: invert(97%) sepia(0%) saturate(7458%) hue-rotate(46deg) brightness(108%) contrast(97%);
     }
+
+    @keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+	
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+	
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
 
   </style>
 </head>
@@ -151,7 +183,7 @@
   </div>
 
   <div class="word-input side-padding">
-    <input type="text" id="custom-word-input" placeholder="Enter custom word or phrase">
+    <input type="text" id="custom-word-input" placeholder="Write something to speak">
     <button id="custom-word-button"><img src="img/mic.svg" class="icon filter-white"></button>
   </div>
 
