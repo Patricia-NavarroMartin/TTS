@@ -13,8 +13,10 @@
       --spacing-s: 8px;
       --spacing-m: 16px;
       --primary: #E0E4CD;
+      --secondary: black;
       --ui01: #F3F5EB;
       --rounded: 8px;
+      --round: 999px;
       --bg-color: white;
     }
 
@@ -29,7 +31,7 @@
       position: sticky;
       top: 0;
       background-color: var(--bg-color);
-      padding: var(--spacing-s) var(--spacing-m); var(--spacing-s); var(--spacing-m);;
+      padding: var(--spacing-s) var(--spacing-m) var(--spacing-s) var(--spacing-m);
     }
 
     #preview-box {
@@ -95,6 +97,7 @@
       position: sticky;
       bottom: 0;
       display: flex;
+      align-items: center;
       background-color: var(--ui01);
       padding-top: var(--spacing-s);
       padding-bottom: var(--spacing-s);
@@ -112,11 +115,25 @@
 
     #custom-word-button {
       margin-left: var(--spacing-m);
+      border-radius: var(--round);
+      padding: var(--spacing-s);
+      width: 56px;
+      height: 56px;
+      border: none;
+      background-color: var(--secondary);
     }
 
     .side-padding {
       padding-left: var(--spacing-m);
       padding-right: var(--spacing-m);
+    }
+
+    .icon {
+      padding: var(--spacing-s);
+    }
+
+    .filter-white {
+      filter: invert(97%) sepia(0%) saturate(7458%) hue-rotate(46deg) brightness(108%) contrast(97%);
     }
 
   </style>
@@ -135,7 +152,7 @@
 
   <div class="word-input side-padding">
     <input type="text" id="custom-word-input" placeholder="Enter custom word or phrase">
-    <button id="custom-word-button">Speak</button>
+    <button id="custom-word-button"><img src="img/mic.svg" class="icon filter-white"></button>
   </div>
 
   <script>
