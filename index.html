@@ -6,7 +6,7 @@
   <meta name="description" content="Text-To-Speech">
   <meta name="keywords" content="AAC, text to speech, tts">
   <meta name="author" content="Shannon Donker">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AAC TTS App</title>
   <style>
     :root {
@@ -28,6 +28,10 @@
       font-size: 1rem;
     }
 
+    #logo {
+      display: block;
+      margin-left: auto;
+    }
     #preview-box-container {
       position: sticky;
       top: 0;
@@ -36,6 +40,7 @@
     }
 
     #preview-box {
+      margin-top: var(--spacing-s);
       display: flex;
       gap: var(--spacing-s);
       flex-direction: column; /* Stack items vertically */
@@ -81,8 +86,8 @@
 
     button:disabled,
     button[disabled]{
-    background-color: var(--disabled) !important;
     cursor: not-allowed;
+    color: black;
 }
 
     .word-buttons {
@@ -104,7 +109,7 @@
       text-overflow: ellipsis;
     }
 
-    .word-button:focus {
+    .word-button:disabled {
       transform: scale(1);
 	    animation: pulse-green 2s infinite;
     }
@@ -139,9 +144,17 @@
       background-color: var(--secondary);
     }
 
-    #custom-word-button:focus {
-      transform: scale(1);
-	    animation: pulse-black 2s infinite;
+    #custom-word-button:active {
+      transform: scale(1) !important;
+	    animation: pulse-black 2s infinite !important;
+      background-color: red !important;
+    }
+
+    #custom-word-button:disabled {
+      background-color: var(--disabled);
+      /* transform: scale(1) !important;
+	    animation: pulse-black 2s infinite !important;
+      background-color: red !important; */
     }
 
     .side-padding {
@@ -202,6 +215,7 @@
 
 <body>
   <div id="preview-box-container">
+    <img src="img/shansays-logo.svg" id="logo" alt="logo">
     <div id="preview-box">
       <div id="preview-text">Select or type a word</div>
       <sub>Tap to flip</sub>
@@ -241,8 +255,8 @@
       }
     ];
 
-    // Create word buttons for each category
-    const categoriesContainer = document.querySelector('.categories');
+   // Create word buttons for each category
+   const categoriesContainer = document.querySelector('.categories');
     categories.forEach(category => {
       const categoryDiv = document.createElement('div');
       categoryDiv.classList.add('category');
@@ -260,8 +274,14 @@
         wordButton.classList.add('word-button');
         wordButton.textContent = word;
         wordButton.addEventListener('click', () => {
-          speakText(word);
-          displaySpokenText(word);
+          if (!wordButton.disabled) {
+            wordButton.disabled = true;
+            speakText(word);
+            displaySpokenText(word);
+            setTimeout(() => {
+              wordButton.disabled = false;
+            }, 1000);
+          }
         });
         wordButtonsDiv.appendChild(wordButton);
       });
@@ -275,10 +295,16 @@
     const customWordInput = document.getElementById('custom-word-input');
 
     customWordButton.addEventListener('click', () => {
-      const customWord = customWordInput.value.trim();
-      if (customWord !== '') {
-        speakText(customWord);
-        displaySpokenText(customWord);
+      if (!customWordButton.disabled) {
+        const customWord = customWordInput.value.trim();
+        if (customWord !== '') {
+          customWordButton.disabled = true;
+          speakText(customWord);
+          displaySpokenText(customWord);
+          setTimeout(() => {
+            customWordButton.disabled = false;
+          }, 1000);
+        }
       }
     });
 
