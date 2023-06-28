@@ -213,7 +213,7 @@
 
   <div class="word-input side-padding">
     <input type="text" id="custom-word-input" placeholder="Write something to speak">
-    <button id="custom-word-button"><img src="img/mic.svg" class="icon filter-white"></button>
+    <button id="custom-word-button" disabled><img src="img/mic.svg" class="icon filter-white"></button>
   </div>
 
   <script>
@@ -305,6 +305,19 @@
     // Add event listener to the flip button
     const flipButton = document.getElementById('preview-box');
     flipButton.addEventListener('click', flipText);
+
+    // Function to disable/enable custom-word-button based on input value
+    function checkCustomWordInput() {
+      const button = document.getElementById('custom-word-button');
+      button.disabled = this.value.trim() === '';
+    }
+
+    // Attach event listeners to input and change events of custom-word-input
+    const input = document.getElementById('custom-word-input');
+    input.addEventListener('input', checkCustomWordInput);
+
+    // Trigger the function once on page load
+    checkCustomWordInput.call(input);
   </script>
 </body>
 
