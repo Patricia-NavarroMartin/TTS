@@ -98,6 +98,19 @@
     text-overflow: ellipsis;
   }
 
+  .word-button.add-phrase-button {
+    padding: var(--spacing-s) var(--spacing-m);
+    width: calc(33% - var(--spacing-s));
+    background-color: transparent;
+    border: 2px solid;
+    border-radius: var(--rounded);
+    border-color: var(--primary);
+    height: 52px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .word-button:disabled {
     transform: scale(1);
       animation: pulse-green 2s infinite;
