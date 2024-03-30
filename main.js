@@ -1,3 +1,5 @@
+import * as db from './db.js';
+
 // Array of category names and their corresponding words
 var categories = [
   {
@@ -83,9 +85,16 @@ function loadWordButtons(category, categoryDiv) {
       }
     });
   } else {
-    console.log("Category NOT found. Creating...");
+    console.log("Category "+category.name+" NOT found. Creating...");
     wordButtonsDiv = document.createElement("div");
     wordButtonsDiv.classList.add("word-buttons");
+
+    //Add any custom words available from cookies to the array
+    const storedCustomWords = db.getCustomPhrasesFromCategory(category.name);
+    console.log("Stored custom words:"+ storedCustomWords);
+    storedCustomWords.forEach((word) => {
+      category.words.push(word);
+    });
 
     //Create a button per word in the category
     category.words.forEach((word) => {
@@ -190,6 +199,9 @@ function addPhraseToCategory(categoryName, text) {
     // Add the string to the "words" array using push() method
     categories[categoryIndex].words.push(text);
     loadWordButtons(categories[categoryIndex]);
+    const cookieKey = categoryName + "_" + text;
+    console.log("New cookie. Key: "+cookieKey+" value: "+ text);
+    db.setCookie(cookieKey, text, 3650)
     console.log(categories);
   } else {
     console.log("Category not found.");
