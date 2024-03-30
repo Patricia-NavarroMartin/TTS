@@ -1,4 +1,4 @@
-import * as db from './db.js';
+import * as db from "./db.js";
 
 // Array of category names and their corresponding words
 var categories = [
@@ -54,7 +54,6 @@ categories.forEach((category) => {
 
   categoryDiv.appendChild(loadWordButtons(category));
 
-  //categoryDiv.appendChild(wordButtonsDiv);
   categoriesContainer.appendChild(categoryDiv);
 });
 
@@ -81,17 +80,20 @@ function loadWordButtons(category, categoryDiv) {
       } else {
         console.log("No button for " + word + ". Creating button...");
         // Insert before the "Add phrase" button
-        wordButtonsDiv.insertBefore(createWordButton(word), wordButtonsDiv.lastElementChild);
+        wordButtonsDiv.insertBefore(
+          createWordButton(word),
+          wordButtonsDiv.lastElementChild
+        );
       }
     });
   } else {
-    console.log("Category "+category.name+" NOT found. Creating...");
+    console.log("Category " + category.name + " NOT found. Creating...");
     wordButtonsDiv = document.createElement("div");
     wordButtonsDiv.classList.add("word-buttons");
 
     //Add any custom words available from cookies to the array
     const storedCustomWords = db.getCustomPhrasesFromCategory(category.name);
-    console.log("Stored custom words:"+ storedCustomWords);
+    console.log("Stored custom words:" + storedCustomWords);
     storedCustomWords.forEach((word) => {
       category.words.push(word);
     });
@@ -126,19 +128,19 @@ function createWordButton(word) {
 
 // Create "Add phrase" button
 function createAddPhraseButton(category) {
-    const addPhraseButton = document.createElement("button");
-    addPhraseButton.classList.add('word-button', 'add-phrase-button');
-    addPhraseButton.textContent = "Add phrase";
-    addPhraseButton.addEventListener("click", () => {
-      if (!addPhraseButton.disabled) {
-        addPhraseButton.disabled = true;
-        displaySpeakAndAddPhrase(category);
-        setTimeout(() => {
-          addPhraseButton.disabled = false;
-        }, 1000);
-      }
-    });
-    return addPhraseButton;
+  const addPhraseButton = document.createElement("button");
+  addPhraseButton.classList.add("word-button", "add-phrase-button");
+  addPhraseButton.textContent = "Add phrase";
+  addPhraseButton.addEventListener("click", () => {
+    if (!addPhraseButton.disabled) {
+      addPhraseButton.disabled = true;
+      displaySpeakAndAddPhrase(category);
+      setTimeout(() => {
+        addPhraseButton.disabled = false;
+      }, 1000);
+    }
+  });
+  return addPhraseButton;
 }
 
 // Word action on click
@@ -152,8 +154,9 @@ function displaySpeakAndAddPhrase(category) {
   const input = document.getElementById("custom-word-input");
   const customWord = customWordInput.value.trim();
   displayAndSpeak(customWord);
-  addPhraseToCategory(category.name, customWord);
-  loadWordButtons(category);
+  if (addPhraseToCategory(category.name, customWord)) {
+    loadWordButtons(category);
+  }
 }
 
 // Handle custom word input and button
@@ -189,23 +192,37 @@ function displaySpokenText(text) {
 }
 
 // Function to add custom word to category
-function addPhraseToCategory(categoryName, text) {
+function addPhraseToCategory(categoryName, newWord) {
+  // Check if category exists
   const categoryIndex = categories.findIndex(
     (category) => category.name == categoryName
   );
-
-  // Check if the category exists
-  if (categoryIndex !== -1) {
-    // Add the string to the "words" array using push() method
-    categories[categoryIndex].words.push(text);
-    loadWordButtons(categories[categoryIndex]);
-    const cookieKey = categoryName + "_" + text;
-    console.log("New cookie. Key: "+cookieKey+" value: "+ text);
-    db.setCookie(cookieKey, text, 3650)
-    console.log(categories);
-  } else {
-    console.log("Category not found.");
+  if (categoryIndex == -1) {
+    console.log("Trying to add a word to an inexistent category.");
+    return false;
   }
+
+  // Check if the word already exists (in any category)
+  const categoriesWithWord = [];
+  categories.forEach((category) => {
+    if (category.words.includes(newWord)) {
+      categoriesWithWord.push(category.name);
+    }
+  });
+
+  if (categoriesWithWord.length > 0) {
+    console.log("Word already exists in category: " + categoriesWithWord);
+    return false;
+  }
+
+  // Add the string to the "words" array using push() method
+  categories[categoryIndex].words.push(newWord);
+  loadWordButtons(categories[categoryIndex]);
+  const cookieKey = categoryName + "_" + newWord;
+  console.log("New cookie. Key: " + cookieKey + " value: " + newWord);
+  db.setCookie(cookieKey, newWord, 3650);
+  console.log(categories);
+  return true;
 }
 
 // Function to flip the text upside down
