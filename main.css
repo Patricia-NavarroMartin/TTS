@@ -169,13 +169,25 @@
   font-size: inherit;
   }
 
-
   .icon {
     padding: var(--spacing-s);
   }
 
   .filter-white {
     filter: invert(97%) sepia(0%) saturate(7458%) hue-rotate(46deg) brightness(108%) contrast(97%);
+  }
+
+  #toast {
+    color: white;
+    background-color: var(--secondary);
+    padding: var(--spacing-m);
+    border-radius: var(--rounded);
+
+    /* Trying to position it to the top and horizontally centred?
+    position: absolute;
+    top: 8px;
+    left: auto;
+    z-index: 999; */
   }
 
   @keyframes pulse-black {
