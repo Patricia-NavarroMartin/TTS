@@ -1,13 +1,22 @@
 :root {
-    --spacing-s: 8px;
-    --spacing-m: 16px;
-    --primary: #E0E4CD;
-    --secondary: black;
-    --ui01: #F3F5EB;
-    --rounded: 8px;
-    --round: 999px;
-    --bg-color: white;
-    --disabled: #D9DCD1 ;
+  /* Spacing */
+  --spacing-s: 8px;
+  --spacing-m: 16px;
+
+  /* Radius */
+  --rounded: 8px;
+  --round: 999px;
+
+  /* Semantic Colors */
+  --primary: #E0E4CD;
+  --secondary: black;
+  --bg-color: white;
+  --disabled: #D9DCD1 ;
+
+  /* UI Colors */
+  --ui01: #F3F5EB;
+  --ui02: #E4E7D7;
+  --ui05: #B5BD9A;
   }
 
   body {
