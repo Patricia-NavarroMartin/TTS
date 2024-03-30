@@ -211,7 +211,8 @@ function addPhraseToCategory(categoryName, newWord) {
   });
 
   if (categoriesWithWord.length > 0) {
-    console.log("Word already exists in category: " + categoriesWithWord);
+    console.log("This phrase already exists in \"" + categoriesWithWord + "\"");
+    showToast("This phrase already exists in \"" + categoriesWithWord + "\"");
     return false;
   }
 
@@ -224,6 +225,19 @@ function addPhraseToCategory(categoryName, newWord) {
   console.log(categories);
   return true;
 }
+
+// Show custom toast
+function showToast(text) {
+  const toast = document.getElementById('toast');
+  toast.textContent = text;
+  toast.classList.remove('hidden');
+  toast.classList.add('show');
+  setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.add('hidden');
+  }, 3000); // Hide after 3 seconds (adjust as needed)
+}
+
 
 // Function to flip the text upside down
 function flipText() {
