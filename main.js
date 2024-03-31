@@ -219,10 +219,13 @@ function addPhraseToCategory(categoryName, newWord) {
   // Add the string to the "words" array using push() method
   categories[categoryIndex].words.push(newWord);
   loadWordButtons(categories[categoryIndex]);
-  const cookieKey = categoryName + "_" + newWord;
-  console.log("New cookie. Key: " + cookieKey + " value: " + newWord);
-  db.setCookie(cookieKey, newWord, 3650);
-  console.log(categories);
+  hashString(newWord)
+      .then((hash) => {
+        const cookieKey = categoryName + "_" + hash;
+        console.log("New cookie. Key: " + cookieKey + " value: " + newWord);
+        db.setCookie(cookieKey, newWord, 3650);
+      })
+      .catch((error) => console.error("Error:", error));
   return true;
 }
 
@@ -238,6 +241,23 @@ function showToast(text) {
   }, 3000); // Hide after 3 seconds (adjust as needed)
 }
 
+
+async function hashString(inputString) {
+  // Convert the input string to an ArrayBuffer
+  const encoder = new TextEncoder();
+  const data = encoder.encode(inputString);
+
+  // Calculate the hash using SHA-256 algorithm
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  // Convert the hash ArrayBuffer to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+
+  return hashHex;
+}
 
 // Function to flip the text upside down
 function flipText() {
