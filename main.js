@@ -219,11 +219,11 @@ function addPhraseToCategory(categoryName, newWord) {
   // Add the string to the "words" array using push() method
   categories[categoryIndex].words.push(newWord);
   loadWordButtons(categories[categoryIndex]);
-  hashString(text)
+  hashString(newWord)
       .then((hash) => {
         const cookieKey = categoryName + "_" + hash;
-        console.log("New cookie. Key: " + cookieKey + " value: " + text);
-        db.setCookie(cookieKey, text, 3650);
+        console.log("New cookie. Key: " + cookieKey + " value: " + newWord);
+        db.setCookie(cookieKey, newWord, 3650);
       })
       .catch((error) => console.error("Error:", error));
   return true;
