@@ -54,7 +54,6 @@ categories.forEach((category) => {
 
   categoryDiv.appendChild(loadWordButtons(category));
 
-  //categoryDiv.appendChild(wordButtonsDiv);
   categoriesContainer.appendChild(categoryDiv);
 });
 
@@ -155,8 +154,9 @@ function displaySpeakAndAddPhrase(category) {
   const input = document.getElementById("custom-word-input");
   const customWord = customWordInput.value.trim();
   displayAndSpeak(customWord);
-  addPhraseToCategory(category.name, customWord);
-  loadWordButtons(category);
+  if (addPhraseToCategory(category.name, customWord)) {
+    loadWordButtons(category);
+  }
 }
 
 // Handle custom word input and button
@@ -192,29 +192,55 @@ function displaySpokenText(text) {
 }
 
 // Function to add custom word to category
-function addPhraseToCategory(categoryName, text) {
+function addPhraseToCategory(categoryName, newWord) {
+  // Check if category exists
   const categoryIndex = categories.findIndex(
     (category) => category.name == categoryName
   );
+  if (categoryIndex == -1) {
+    console.log("Trying to add a word to an inexistent category.");
+    return false;
+  }
 
-  // Check if the category exists
-  if (categoryIndex !== -1) {
-    // Add the string to the "words" array using push() method
-    categories[categoryIndex].words.push(text);
-    loadWordButtons(categories[categoryIndex]);
-    hashString(text)
+  // Check if the word already exists (in any category)
+  const categoriesWithWord = [];
+  categories.forEach((category) => {
+    if (category.words.includes(newWord)) {
+      categoriesWithWord.push(category.name);
+    }
+  });
+
+  if (categoriesWithWord.length > 0) {
+    console.log("This phrase already exists in \"" + categoriesWithWord + "\"");
+    showToast("This phrase already exists in \"" + categoriesWithWord + "\"");
+    return false;
+  }
+
+  // Add the string to the "words" array using push() method
+  categories[categoryIndex].words.push(newWord);
+  loadWordButtons(categories[categoryIndex]);
+  hashString(text)
       .then((hash) => {
         const cookieKey = categoryName + "_" + hash;
         console.log("New cookie. Key: " + cookieKey + " value: " + text);
         db.setCookie(cookieKey, text, 3650);
       })
       .catch((error) => console.error("Error:", error));
-
-    console.log(categories);
-  } else {
-    console.log("Category not found.");
-  }
+  return true;
 }
+
+// Show custom toast
+function showToast(text) {
+  const toast = document.getElementById('toast');
+  toast.textContent = text;
+  toast.classList.remove('hidden');
+  toast.classList.add('show');
+  setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.add('hidden');
+  }, 3000); // Hide after 3 seconds (adjust as needed)
+}
+
 
 async function hashString(inputString) {
   // Convert the input string to an ArrayBuffer
