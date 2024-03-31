@@ -1,4 +1,4 @@
-import * as db from './db.js';
+import * as db from "./db.js";
 
 // Array of category names and their corresponding words
 var categories = [
@@ -81,17 +81,20 @@ function loadWordButtons(category, categoryDiv) {
       } else {
         console.log("No button for " + word + ". Creating button...");
         // Insert before the "Add phrase" button
-        wordButtonsDiv.insertBefore(createWordButton(word), wordButtonsDiv.lastElementChild);
+        wordButtonsDiv.insertBefore(
+          createWordButton(word),
+          wordButtonsDiv.lastElementChild
+        );
       }
     });
   } else {
-    console.log("Category "+category.name+" NOT found. Creating...");
+    console.log("Category " + category.name + " NOT found. Creating...");
     wordButtonsDiv = document.createElement("div");
     wordButtonsDiv.classList.add("word-buttons");
 
     //Add any custom words available from cookies to the array
     const storedCustomWords = db.getCustomPhrasesFromCategory(category.name);
-    console.log("Stored custom words:"+ storedCustomWords);
+    console.log("Stored custom words:" + storedCustomWords);
     storedCustomWords.forEach((word) => {
       category.words.push(word);
     });
@@ -126,19 +129,19 @@ function createWordButton(word) {
 
 // Create "Add phrase" button
 function createAddPhraseButton(category) {
-    const addPhraseButton = document.createElement("button");
-    addPhraseButton.classList.add('word-button', 'add-phrase-button');
-    addPhraseButton.textContent = "Add phrase";
-    addPhraseButton.addEventListener("click", () => {
-      if (!addPhraseButton.disabled) {
-        addPhraseButton.disabled = true;
-        displaySpeakAndAddPhrase(category);
-        setTimeout(() => {
-          addPhraseButton.disabled = false;
-        }, 1000);
-      }
-    });
-    return addPhraseButton;
+  const addPhraseButton = document.createElement("button");
+  addPhraseButton.classList.add("word-button", "add-phrase-button");
+  addPhraseButton.textContent = "Add phrase";
+  addPhraseButton.addEventListener("click", () => {
+    if (!addPhraseButton.disabled) {
+      addPhraseButton.disabled = true;
+      displaySpeakAndAddPhrase(category);
+      setTimeout(() => {
+        addPhraseButton.disabled = false;
+      }, 1000);
+    }
+  });
+  return addPhraseButton;
 }
 
 // Word action on click
@@ -199,13 +202,35 @@ function addPhraseToCategory(categoryName, text) {
     // Add the string to the "words" array using push() method
     categories[categoryIndex].words.push(text);
     loadWordButtons(categories[categoryIndex]);
-    const cookieKey = categoryName + "_" + text;
-    console.log("New cookie. Key: "+cookieKey+" value: "+ text);
-    db.setCookie(cookieKey, text, 3650)
+    hashString(text)
+      .then((hash) => {
+        const cookieKey = categoryName + "_" + hash;
+        console.log("New cookie. Key: " + cookieKey + " value: " + text);
+        db.setCookie(cookieKey, text, 3650);
+      })
+      .catch((error) => console.error("Error:", error));
+
     console.log(categories);
   } else {
     console.log("Category not found.");
   }
+}
+
+async function hashString(inputString) {
+  // Convert the input string to an ArrayBuffer
+  const encoder = new TextEncoder();
+  const data = encoder.encode(inputString);
+
+  // Calculate the hash using SHA-256 algorithm
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  // Convert the hash ArrayBuffer to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+
+  return hashHex;
 }
 
 // Function to flip the text upside down
