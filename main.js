@@ -1,45 +1,7 @@
 import * as db from "./db.js";
+import * as cat from "./categories.js";
 
-// Array of category names and their corresponding words
-var categories = [
-  {
-    name: "Introductional",
-    words: [
-      "Hello",
-      "How are you?",
-      "My name is Shannon",
-      "I can not speak, so I speak through this app",
-      "Bye",
-    ],
-  },
-  {
-    name: "Common",
-    words: [
-      "Yes",
-      "No",
-      "Thank you",
-      "Please",
-      "Maybe",
-      "Why?",
-      "Okay",
-      "I do not know",
-      "Hahahaha",
-    ],
-  },
-  {
-    name: "Feelings",
-    words: ["I like it", "I do not like it", "I love you"],
-  },
-  {
-    name: "Needs",
-    words: ["I am hungry", "I am thirsty", "I have to pee"],
-  },
-  {
-    name: "Directional",
-    words: ["Come", "I am coming", "I am leaving"],
-  },
-];
-
+const categories = cat.categories;
 // Build each category section
 const categoriesContainer = document.querySelector(".categories");
 categories.forEach((category) => {
@@ -154,8 +116,11 @@ function displaySpeakAndAddPhrase(category) {
   const input = document.getElementById("custom-word-input");
   const customWord = customWordInput.value.trim();
   displayAndSpeak(customWord);
-  if (addPhraseToCategory(category.name, customWord)) {
+  const wasAdded = cat.addPhraseToCategory(category.name, customWord)
+  if (wasAdded.result) {
     loadWordButtons(category);
+  } else {
+    showToast(wasAdded.text);
   }
 }
 
@@ -191,72 +156,17 @@ function displaySpokenText(text) {
   spokenTextDiv.textContent = text;
 }
 
-// Function to add custom word to category
-function addPhraseToCategory(categoryName, newWord) {
-  // Check if category exists
-  const categoryIndex = categories.findIndex(
-    (category) => category.name == categoryName
-  );
-  if (categoryIndex == -1) {
-    console.log("Trying to add a word to an inexistent category.");
-    return false;
-  }
-
-  // Check if the word already exists (in any category)
-  const categoriesWithWord = [];
-  categories.forEach((category) => {
-    if (category.words.includes(newWord)) {
-      categoriesWithWord.push(category.name);
-    }
-  });
-
-  if (categoriesWithWord.length > 0) {
-    console.log("This phrase already exists in \"" + categoriesWithWord + "\"");
-    showToast("This phrase already exists in \"" + categoriesWithWord + "\"");
-    return false;
-  }
-
-  // Add the string to the "words" array using push() method
-  categories[categoryIndex].words.push(newWord);
-  loadWordButtons(categories[categoryIndex]);
-  hashString(newWord)
-      .then((hash) => {
-        const cookieKey = categoryName + "_" + hash;
-        console.log("New cookie. Key: " + cookieKey + " value: " + newWord);
-        db.setCookie(cookieKey, newWord, 3650);
-      })
-      .catch((error) => console.error("Error:", error));
-  return true;
-}
 
 // Show custom toast
 function showToast(text) {
-  const toast = document.getElementById('toast');
+  const toast = document.getElementById("toast");
   toast.textContent = text;
-  toast.classList.remove('hidden');
-  toast.classList.add('show');
+  toast.classList.remove("hidden");
+  toast.classList.add("show");
   setTimeout(() => {
-      toast.classList.remove('show');
-      toast.classList.add('hidden');
+    toast.classList.remove("show");
+    toast.classList.add("hidden");
   }, 3000); // Hide after 3 seconds (adjust as needed)
-}
-
-
-async function hashString(inputString) {
-  // Convert the input string to an ArrayBuffer
-  const encoder = new TextEncoder();
-  const data = encoder.encode(inputString);
-
-  // Calculate the hash using SHA-256 algorithm
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-
-  // Convert the hash ArrayBuffer to a hexadecimal string
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hashHex;
 }
 
 // Function to flip the text upside down
